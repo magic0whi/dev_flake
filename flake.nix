@@ -61,6 +61,7 @@
       inherit c-cpp;
       c = c-cpp;
       cpp = c-cpp;
+      latex = import_shell "latex";
     });
   };
 }
