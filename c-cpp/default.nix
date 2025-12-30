@@ -17,7 +17,7 @@
     # vcpkg
     # vcpkg-tool
   ]
-  ++ (if system == "aarch64-darwin" then [] else [gdb]);
+  ++ (if stdenv.hostPlatform.isDarwin then [] else [gdb]);
   shellHook = ''
     echo "------ gcc -----";
     gcc --version
