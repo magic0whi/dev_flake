@@ -1,6 +1,6 @@
 {
   description = "My nix develops";
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/050e09e091117c3d7328c7b2b7b577492c43c134";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/1412caf7bf9e660f2f962917c14b1ea1c3bc695e";
   outputs = {self, ...}@inputs: let
     supported_systems = [
       "aarch64-darwin"
