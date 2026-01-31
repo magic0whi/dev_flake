@@ -7,6 +7,5 @@ in _pkgs.mkShell {
   packages = with pkgs; [ node2nix nodejs nodePackages.pnpm yarn ];
   shellHook = ''
     echo "node `node --version`"
-    exec zsh
   '';
 }

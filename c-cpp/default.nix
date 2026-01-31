@@ -23,6 +23,5 @@
     gcc --version
     echo "------ ld ------"
     ld -v
-    exec zsh
   '';
 })

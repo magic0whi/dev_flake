@@ -17,7 +17,6 @@
 in pkgs.mkShell {
   shellHook = ''
     python --version
-    exec zsh
   '';
   venvDir = ".venv";
   postShellHook = ''

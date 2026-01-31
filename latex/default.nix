@@ -56,6 +56,8 @@
   ]);
 in pkgs.mkShellNoCC {
   packages = with pkgs; [
+    just
+
     my_texlive
     texlab
     ltex-ls
@@ -68,6 +70,5 @@ in pkgs.mkShellNoCC {
     latexmk -version
     texlab --version
     ltex-ls --version
-    exec zsh
   '';
 }
