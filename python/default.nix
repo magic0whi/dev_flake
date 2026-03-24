@@ -4,7 +4,7 @@
   * existing one. After this, reload the development shell to rebuild it. You'll see a warning asking you to
   * do this when version mismatches are present. For safety, removal should be a manual step, even if trivial.
   */
-  version = "3.13";
+  version = "3.14";
   py_package = let
     # Construct a function to concatenate marjor and minor versions
     # nixpkgs doesn't have patch version included for package naming suffix
@@ -37,8 +37,7 @@ in pkgs.mkShell {
     venvShellHook
     pip
 
-    /* Add whatever else you'd like here. */
-    requests paramiko scp chardet pyyaml ruamel-yaml flask
+    uv
     # (let version = "2.3.2";
     # in flask.overrideAttrs (_: prev: {
     #   inherit version;
@@ -48,14 +47,5 @@ in pkgs.mkShell {
     #     hash = "sha256-KEx7jy9Yy3N/DPHDD9fq8Mz83hlgmdJOzt4/wgBapZ4=";
     #   };
     # }))
-    # pkgs.basedpyright
-
-    # pkgs.black
-    /* or */
-    # python.pkgs.black
-
-    # pkgs.ruff
-    /* or */
-    # python.pkgs.ruff
   ];
 }
