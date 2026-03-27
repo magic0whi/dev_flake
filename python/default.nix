@@ -38,6 +38,7 @@ in pkgs.mkShell {
     pip
 
     uv
+    requests paramiko scp chardet pyyaml ruamel-yaml flask # sing-box-subscribe
     # (let version = "2.3.2";
     # in flask.overrideAttrs (_: prev: {
     #   inherit version;
