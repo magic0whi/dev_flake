@@ -39,6 +39,9 @@ in pkgs.mkShell {
 
     uv
     requests paramiko scp chardet pyyaml ruamel-yaml flask # sing-box-subscribe
+
+    pytesseract
+    fava fava-dashboards
     # (let version = "2.3.2";
     # in flask.overrideAttrs (_: prev: {
     #   inherit version;

@@ -1,18 +1,15 @@
 {
   description = "My nix develops";
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/5bc33ec2d6e0f7d3a3afcf58f5e12f6ec288d14b";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/68d8aa3d661f0e6bd5862291b5bb263b2a6595c9";
   outputs = {self, ...}@inputs: let
     supported_systems = [
       "aarch64-darwin"
       "x86_64-linux"
     ];
-    # Provides `system` and `pkgs`
-    for_each_supported_system = f: (inputs.nixpkgs.lib.genAttrs
-      supported_systems
-      (system: f {
+    for_each_supported_system = f: ( # Provides `system` and `pkgs`
+      inputs.nixpkgs.lib.genAttrs supported_systems (system: f {
         inherit system;
-        # pkgs = import inputs.nixpkgs {inherit system;}; # Or
-        pkgs = inputs.nixpkgs.legacyPackages.${system};
+        pkgs = import inputs.nixpkgs {inherit system; config.allowUnfree = true;};
       })
     );
   in {
@@ -56,12 +53,13 @@
         ]
         ++ [self.formatter.${system}];
       };
-      node = import_shell "node";
-      python = import_shell "python";
       inherit c-cpp;
       c = c-cpp;
       cpp = c-cpp;
+      cuda = import_shell "cuda";
       latex = import_shell "latex";
+      node = import_shell "node";
+      python = import_shell "python";
     });
   };
 }

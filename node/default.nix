@@ -4,7 +4,7 @@
     yarn = prev.yarn.override {inherit nodejs;};
   });
 in _pkgs.mkShell {
-  packages = with pkgs; [nodejs nodePackages.pnpm yarn bun];
+  packages = with pkgs; [nodejs pnpm yarn bun typescript-language-server];
   shellHook = ''
     echo "node `node --version`"
   '';
