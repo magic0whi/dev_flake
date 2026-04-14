@@ -1,6 +1,6 @@
 {
   description = "My nix develops";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/68d8aa3d661f0e6bd5862291b5bb263b2a6595c9";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/4c1018dae018162ec878d42fec712642d214fdfa";
   outputs = {self, ...}@inputs: let
     supported_systems = [
       "aarch64-darwin"
@@ -17,6 +17,7 @@
     devShells = for_each_supported_system ({system, pkgs}: let
       import_shell = dir: (import ./${dir} {inherit pkgs system;});
       c-cpp = import_shell "c-cpp";
+      cuda_unwrapped = import_shell "cuda";
     in {
       default = let
         get_system = "$(nix eval --impure --raw --expr 'builtins.currentSystem')";
@@ -56,10 +57,21 @@
       inherit c-cpp;
       c = c-cpp;
       cpp = c-cpp;
-      cuda = import_shell "cuda";
       latex = import_shell "latex";
       node = import_shell "node";
       python = import_shell "python";
+      cuda = cuda_unwrapped.shell;
+      pythonCuda = pkgs.mkShell {
+        inputsFrom = [
+          cuda_unwrapped.shell
+          (import ./python {
+            inherit system;
+            pkgs = cuda_unwrapped.cuda_pkgs;
+            pythonVersion = "3.13";
+            extraPackages = ps: [ps.vllm];
+          })
+        ];
+      };
     });
   };
 }

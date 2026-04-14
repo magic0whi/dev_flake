@@ -2,7 +2,7 @@
   # Override stdenv in order to change compiler:
   # stdenv = pkgs.clangStdenv;
 } {
-  packages = with pkgs; [
+  buildInputs = with pkgs; [
     llvmPackages.clangUseLLVM
     llvmPackages.bintools
     clang-tools

@@ -55,7 +55,7 @@
     xkeyval
   ]);
 in pkgs.mkShellNoCC {
-  packages = with pkgs; [
+  buildInputs = with pkgs; [
     my_texlive
     texlab
     ltex-ls

@@ -1,10 +1,15 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  pythonVersion ? "3.14",
+  extraPackages ? (ps: []),
+  ...
+}: let
   /* Change this value ({major}.{min}) to update the Python virtual-environment version. When you do this, make sure
   * to delete the `.venv` directory to have the hook rebuild it for the new version, since it won't overwrite an
   * existing one. After this, reload the development shell to rebuild it. You'll see a warning asking you to
   * do this when version mismatches are present. For safety, removal should be a manual step, even if trivial.
   */
-  version = "3.14";
+  version = pythonVersion;
   py_package = let
     # Construct a function to concatenate marjor and minor versions
     # nixpkgs doesn't have patch version included for package naming suffix
@@ -33,11 +38,12 @@ in pkgs.mkShell {
     }
     venvVersionWarn
   '';
-  packages = with py_package.pkgs; [
+  buildInputs = with py_package.pkgs; [
     venvShellHook
-    pip
+    pip uv
 
-    uv
+    ty python-lsp-server ruff
+
     requests paramiko scp chardet pyyaml ruamel-yaml flask # sing-box-subscribe
 
     pytesseract
@@ -51,5 +57,5 @@ in pkgs.mkShell {
     #     hash = "sha256-KEx7jy9Yy3N/DPHDD9fq8Mz83hlgmdJOzt4/wgBapZ4=";
     #   };
     # }))
-  ];
+  ] ++ extraPackages py_package.pkgs;
 }
