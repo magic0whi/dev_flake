@@ -1,5 +1,5 @@
 {pkgs, ...}: (pkgs.mkShell.override {
-  # Override stdenv in order to change compiler:
+  # Override stdenv to change compiler:
   # stdenv = pkgs.clangStdenv;
 } {
   buildInputs = with pkgs; [

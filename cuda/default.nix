@@ -1,11 +1,11 @@
-{pkgs, system, ...}: let
+{pkgs, ...}: let
   nvidiaPackage = pkgs.linuxPackages.nvidiaPackages.stable;
   # NOTE: May move to flake.nix if there is any dev environment has cuda variant
   cuda_pkgs = import pkgs.path {
-    inherit system;
+    inherit (pkgs.stdenv.hostPlatform) system;
     config = {
       allowUnfree = true;
-      cudaSupport =true;
+      cudaSupport = true;
       # Highly recommended to set this to your specific GPU architecture to avoid
       # compiling CUDA code for every GPU ever made.
       # e.g., "8.6" for Ampere (RTX 3000 series), "8.9" for Ada (RTX 4000 series)
@@ -14,7 +14,7 @@
     };
   };
 in {
-  inherit cuda_pkgs; # Export for pythonCuda
+  cudaPkgs = cuda_pkgs; # Export for pythonCuda
   shell = pkgs.mkShell {
     # TIPS: to locate a missing lib, try
     # `nix run github:nix-community/nix-index-database#nix-locate -- "libX11.so.6"`
