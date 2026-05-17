@@ -1,27 +1,32 @@
 {pkgs, ...}: (pkgs.mkShell.override {
-  # Override stdenv to change compiler:
-  # stdenv = pkgs.clangStdenv;
-} {
-  buildInputs = with pkgs; [
-    llvmPackages.clangUseLLVM
-    llvmPackages.bintools
-    clang-tools
-    cmake
-    ninja
-    # codespell
-    # conan
-    # cppcheck
-    # doxygen
-    # gtest
-    # lcov
-    # vcpkg
-    # vcpkg-tool
-  ]
-  ++ (if stdenv.hostPlatform.isDarwin then [] else [gdb]);
-  shellHook = ''
-    echo "------ gcc -----";
-    gcc --version
-    echo "------ ld ------"
-    ld -v
-  '';
-})
+    # Override stdenv to change compiler:
+    # stdenv = pkgs.clangStdenv;
+  } {
+    buildInputs = with pkgs;
+      [
+        llvmPackages.clangUseLLVM
+        llvmPackages.bintools
+        clang-tools
+        cmake
+        ninja
+        # codespell
+        # conan
+        # cppcheck
+        # doxygen
+        # gtest
+        # lcov
+        # vcpkg
+        # vcpkg-tool
+      ]
+      ++ (
+        if stdenv.hostPlatform.isDarwin
+        then []
+        else [gdb]
+      );
+    shellHook = ''
+      echo "------ gcc -----";
+      gcc --version
+      echo "------ ld ------"
+      ld -v
+    '';
+  })

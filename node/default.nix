@@ -3,9 +3,10 @@
     nodejs = prev.nodejs;
     yarn = prev.yarn.override {inherit nodejs;};
   });
-in _pkgs.mkShell {
-  buildInputs = with pkgs; [nodejs pnpm yarn bun typescript-language-server];
-  shellHook = ''
-    echo "node `node --version`"
-  '';
-}
+in
+  _pkgs.mkShell {
+    buildInputs = with pkgs; [nodejs pnpm yarn bun typescript-language-server];
+    shellHook = ''
+      echo "node `node --version`"
+    '';
+  }
